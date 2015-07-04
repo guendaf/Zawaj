@@ -4,10 +4,15 @@ namespace Zawaj\FichesCandidatBundle\Controller;
 
 use Proxies\__CG__\Zawaj\FichesCandidatBundle\Entity\TailleBarbe;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Zawaj\FichesCandidatBundle\Entity\Candidat;
+use Zawaj\FichesCandidatBundle\Entity\DomaineEtude;
 use Zawaj\FichesCandidatBundle\Entity\Pere;
 use Zawaj\FichesCandidatBundle\Form\CandidatType;
+use Zawaj\FichesCandidatBundle\Form\PereType;
+use Zawaj\FichesCandidatBundle\Form\TailleBarbeType;
+use Zawaj\FichesCandidatBundle\Form\DomaineEtudeType;
 
 class FichesCandidatController extends Controller
 {
@@ -36,25 +41,27 @@ class FichesCandidatController extends Controller
 
     }
 
-    public function fichesInscritsAction()
+    public function fichesInscritsAction(Request $request)
     {
 
         // On crée un objet TailleBarbe
-        $tailleBarbe = new Candidat();
+        $tailleBarbe = new DomaineEtude();
 
-        // On crée le FormBuilder grâce au service form factory
-        $formBuilder = $this->get('form.factory')->createBuilder('form', $tailleBarbe);
+        $form = $this->createForm(new DomaineEtudeType(), $tailleBarbe);
 
-        // On ajoute les champs de l'entité que l'on veut à notre formulaire
-        $formBuilder
-            ->add('nom',      'text')
-            ->add('prenom',      'textarea')
-            ->add('save',      'submit')
-        ;
-        // Pour l'instant, pas de candidatures, catégories, etc., on les gérera plus tard
+        $form->handleRequest($request);
 
-        // À partir du formBuilder, on génère le formulaire
-        $form = $formBuilder->getForm();
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tailleBarbe);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+
+            return $this->render('ZawajFichesCandidatBundle::fichesInscrits.html.twig', array(
+                'form' => $form->createView(),
+            ));
+        }
 
         // On passe la méthode createView() du formulaire à la vue
         // afin qu'elle puisse afficher le formulaire toute seule

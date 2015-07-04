@@ -15,11 +15,15 @@ class CandidatHommeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('barbe')
-            ->add('profilRechercheFemme')
-            ->add('barbeSouhaite')
-            ->add('tailleBarbe', 'new TailleBarbeType()')
-            ->add('raserBarbe')
+            ->add('barbe', 'checkbox')
+            ->add('profilRechercheFemme', 'collection', array(
+                'type' => new ProfilRechercheFemmeType(),
+                'allow_add' => true,
+                'allow_delete' => true
+            ))
+            ->add('barbeSouhaite', 'checkbox')
+            ->add('tailleBarbe', new TailleBarbeType())
+            ->add('raserBarbe', 'checkbox')
         ;
     }
     

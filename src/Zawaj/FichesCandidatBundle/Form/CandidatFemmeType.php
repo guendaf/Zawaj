@@ -15,16 +15,24 @@ class CandidatFemmeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('voile')
-            ->add('datePortVoile')
-            ->add('souhaitTravaille')
-            ->add('tuteurCourant')
-            ->add('raisonTuteur')
-            ->add('commentaireTravail')
-            ->add('intentionPortVoile')
-            ->add('tuteur')
-            ->add('representantCandidate')
-            ->add('profilRechercheHomme')
+            ->add('voile', 'checkbox')
+            ->add('datePortVoile', 'date')
+            ->add('souhaitTravaille', 'checkbox')
+            ->add('tuteurCourant', 'checkbox')
+            ->add('raisonTuteur', 'textarea')
+            ->add('commentaireTravail', 'textarea')
+            ->add('intentionPortVoile', new IntentionPortVoileType())
+            ->add('tuteur', new TuteurType())
+            ->add('representantCandidate', 'collection', array(
+                'type' => new RepresentantType(),
+                'allow_add' => true,
+                'allow _delete' => true
+            ))
+            ->add('profilRechercheHomme', 'collection', array(
+                'type' => new ProfilRechercheHommeType(),
+                'allow_add' => true,
+                'allow_delete' => true
+            ))
         ;
     }
     

@@ -1,7 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ade25a75-b968-4e11-a018-3c29e442a3a6" name="Default" comment="" />
+    <list default="true" id="ade25a75-b968-4e11-a018-3c29e442a3a6" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/BarbeSouhaiteType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/CPType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/CandidatFemmeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/DomaineEtudeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/EnfantCandidatType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/EnfantType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/ExigeancePoidsType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/IntentionPortVoileType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/JumuaaType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/MereType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/MusiqueType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/NiveauArabeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/NiveauEtudeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/NiveauFrancaisType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/PaysType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/PereType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/PersonneRencontreeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/PolygamieType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/PriereTrancheHoraireType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/ProfilRechercheFemmeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/ProfilRechercheHommeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/ProfilRechercheType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/RaserBarbeType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/ReferenceReligieuseType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/RelationCandidatMereType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/RelationCandidatPereType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/RepresentantType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/TeintType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/TelevisionType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/TuteurType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/TypeHabitationType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/TypeMariageType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/TypePapierType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/UtilisateurType.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/VilleType.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="Zawaj.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -46,8 +83,8 @@
       <file leaf-file-name="CandidatType.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/CandidatType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8055077" vertical-offset="637" max-vertical-offset="1921">
-              <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.65920824" vertical-offset="637" max-vertical-offset="1921">
+              <caret line="62" column="38" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -1117,8 +1154,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Zawaj/FichesCandidatBundle/Form/CandidatType.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8055077" vertical-offset="637" max-vertical-offset="1921">
-          <caret line="67" column="25" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.65920824" vertical-offset="637" max-vertical-offset="1921">
+          <caret line="62" column="38" selection-start-line="62" selection-start-column="38" selection-end-line="62" selection-end-column="38" />
           <folding />
         </state>
       </provider>

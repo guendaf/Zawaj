@@ -1,0 +1,51 @@
+html, body {
+    background-color: white;
+    overflow: hidden;
+}
+
+body, html, .container-fluid {
+    padding: 0;
+    height: 100%;
+    max-height: 100% !important;
+}
+
+.navbar {
+    height: 100px;
+    background-color: #F5F5F5;
+    margin: 0;
+    padding: 0;
+    border : black 1px solid;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    padding: 5px;
+    margin: 0 !important;
+}
+
+.navbar-nav li {
+    height: 70px;
+    padding: 5px;
+}
+
+.navbar-nav li a {
+    padding: 20px 15px;
+    font-size: 17px;
+}
+
+#headerUser {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background-color: rgb(102, 199, 235);
+    color : white;
+    width: 250px;
+    height: 98px;
+    border: black 1px solid;
+    /*border-radius: 0 0 10px 0px;*/
+}
+
+#contenu{
+    width: 100%;
+    height: calc(100% - 100px);
+}

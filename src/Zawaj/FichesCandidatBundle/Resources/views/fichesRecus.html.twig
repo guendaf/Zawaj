@@ -1,0 +1,334 @@
+{% extends "::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@ZawajFichesCandidatBundle/Resources/public/css/fichesCandidat.css' filter='cssrewrite' %}
+    <link rel="stylesheet" href="{{ asset_url }}" xmlns="http://www.w3.org/1999/html"
+          xmlns="http://www.w3.org/1999/html"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+
+        <div class="page-header">
+            <h2>FICHES RECUES <small> HOMME/FEMME</small></h2>
+            {#Choix visualisation fiches hommes ou femmes#}
+            <div class="btnSexe">
+                <div class="btn-group" role="group" aria-label="choixSexe">
+                    <a href="{{ path('zawaj_fichesCandidat_fiches_recus', {'typeSexe': 'Homme' }) }}"><button type="button" class="btn btn-primary" {% if typeSexe == "Homme" %}btn-success{% endif %}">Hommes <span class="badge">2</span></button></a>
+                    <a href="{{ path('zawaj_fichesCandidat_fiches_recus', {'typeSexe': 'Femme' }) }}"><button type="button" class="btn btn-primary" {% if typeSexe == "Femme" %}btn-success{% endif %}">Femmes <span class="badge">1</span></button></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            
+            {#Tabeaux fiches reçus hommes / femmes#}
+            <table id="tabrecus" class=" table table-condensed table table-bordered table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>STATUT</th>
+                    <th>NOM</th>
+                    <th>PRENOM</th>
+                    <th>TELEPHONE</th>
+                    <th>ADRESSE</th>
+                    <th>ACTION</th>
+                </tr>
+                </thead>
+                <tbody>
+                   {% for leCandidat in lesCandidats %}
+                       <tr>
+                           <td>{{ leCandidat.id }}</td>
+                           <td>{{ leCandidat.nom }}</td>
+                           <td>{{ leCandidat.prenom }}</td>
+                           <td>{{ leCandidat.telephone }}</td>
+                           <td>{{ leCandidat.adresse }}</td>
+                           <td>{{ leCandidat.CP.libelleCP }}</td>
+                           <td>
+                               <a class="afficherCandidatInfos" href="javascript:void(0)" data-id="{{ leCandidat.nom }}"><i class="fa fa-info-circle"></i></a>&nbsp;
+                               <a class="modifierCandidatInfos" href="javascript:void(0)" data-id="{{ leCandidat.nom }}"><i class="glyphicon glyphicon-cog"></i></a>&nbsp;
+                               <a class="afficherCandidatInfos" href="javascript:void(0)" data-id="{{ leCandidat.nom }}"><i class="glyphicon glyphicon-ok"></i></a>
+                           </td>
+                       </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {#MODAL : fenêtres visualisation d'une fiche reçu#}
+        <div class="modal fade" id="infoCandidat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {#filtrage tableau candidat #}
+    <script>
+        $(document).ready(function(){
+            $('#tabrecus').DataTable({
+                "scrollY": "200px",
+                "scrollCollapse": true,
+                "paging": false,
+                "info": true
+            }
+            );
+        });
+    </script>
+
+    {# Script tableau scroll  #}
+    <script type="javascript">
+        // Change the selector if needed
+        var $table = $('table.scroll'),
+                $bodyCells = $table.find('tbody tr:first').children(),
+                colWidth;
+
+        // Adjust the width of thead cells when window resizes
+        $(window).resize(function() {
+            // Get the tbody columns width array
+            colWidth = $bodyCells.map(function() {
+                return $(this).width();
+            }).get();
+
+            // Set the width of thead columns
+            $table.find('thead tr').children().each(function(i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }).resize(); // Trigger resize handler
+    </script>
+
+    {# Implémentation des infos du candidat dans le modal #}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('a.afficherCandidatInfos').click(function(e) {
+                {% for leCandidat in lesCandidats %}
+                if( {{leCandidat.nom|json_encode|raw}} == $(this).data("id") ) {
+                    $('.modal-title', '#infoCandidat').html("{{leCandidat.nom}}");
+                    $('.modal-body', '#infoCandidat').html('' +
+                    '<div id="tabsIndex">'+
+                        '<ul class="nav nav-pills nav-justified" role="tablist">'+
+                            '<li class="active">'+
+                                '<a href="#civilite" role="tab" data-toggle="tab">'+
+                                '<i class="fa fa-server"></i> Civilite'+
+                                '</a>'+
+                            '</li>'+
+                            '<li >'+
+                                '<a href="#situationReligieuse" role="tab" data-toggle="tab">'+
+                                    '<i class="fa fa-child"></i> Situation Religieuse'+
+                                '</a>'+
+                            '</li>'+
+                            '<li >'+
+                                '<a href="#informationsComplementaires" role="tab" data-toggle="tab">'+
+                                    '<i class="fa fa-child"></i> Informations Complementaires'+
+                                '</a>'+
+                            '</li>'+
+                            '<li >'+
+                                '<a href="#profilRecherchee" role="tab" data-toggle="tab">'+
+                                    '<i class="fa fa-child"></i> Profil recherchée'+
+                                '</a>'+
+                            '</li>'+
+                        '</ul>'+
+
+                        <!-- Tab panes -->
+                    ' <div class="tab-content">'+
+                        '<div class="tab-pane fade active in" id="civilite">'+
+                                //CIVILITE
+                                '<div class="tabOnglet"> '+
+                                '<h4>CIVILITE</h4><hr><br>'+
+                                '<strong>Nom :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Prenom :</strong> {{leCandidat.prenom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Date de naissance :</strong> {{leCandidat.dateNaissance|date('d/m/Y')}}<br><br>'+
+                                '<strong>Adresse :</strong> {{leCandidat.adresse}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>CP :</strong> {{leCandidat.CP.libelleCP}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Ville :</strong> {{leCandidat.CP.Ville.libelleVille}}<br><br>'+
+                                '<strong>Type d\'habitation :</strong> {{leCandidat.typeHabitation.libelleTypeHabitation}}<br><br>'+
+                                '<strong>Telephone :</strong> {{leCandidat.telephone}}<br><br>'+
+                                '</div>'+
+
+                                //SITUATION PROFESSIONNELLE
+                                '<div class="tabOnglet"> '+
+                                '<h4>SITUATION PROFESSIONNELLE</h4><hr><br>'+
+                                '<strong>Situation Professionnelle :</strong> {{leCandidat.situationPro}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Recherche un emploi :</strong> {{leCandidat.rechercheEmploi}}<br><br>'+
+                                '<strong>Profession :</strong> {{leCandidat.profession}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Domaine de profession :</strong> {% for domaineProfession in leCandidat.domaineProfession %}{{domaineEtude.libelleDomaineProfession}}{% endfor %}<br><br>'+
+                                '<strong>Est etudiant :</strong> {{leCandidat.estEtudiant}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Niveau d\'étude :</strong> {{leCandidat.niveauEtude.libelleNiveauEtude}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Domaine d\'étude :</strong> {% for domaineEtude in leCandidat.domaineEtude %}{{domaineEtude.domaineEtude}}{% endfor %}<br><br>'+
+                                '<strong>niveau de Français :</strong> {{leCandidat.niveauFrancais.libelleNiveauFrancais}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>niveau d\'arabe :</strong> {{leCandidat.niveauArabe.libelleNiveauArabe}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>autre langues parlées :</strong> {{leCandidat.autreLangue}}<br><br>'+
+                                '</div>'+
+                            '<hr />'+
+
+
+                                // SITUATION ADMINISTRATIVE
+
+                                '<div class="tabOnglet"> '+
+                                '<h4>SITUATION ADMINISTRATIVE</h4><hr><br>'+
+                                '<strong>Est née en France :</strong> {{leCandidat.estNeeEnFrance}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Date d\'arrivée en France :</strong> {{leCandidat.dateArriveeFrance|date('d/m/Y')}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Date d\'arrivée à Toulouse :</strong> {{leCandidat.dateArriveeToulouse|date('d/m/Y')}}<br><br>'+
+                                '<strong>Pays d\'origine :</strong> {{leCandidat.paysOrigine.libellePays}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Pays de nationalité :</strong> {{leCandidat.paysNationalite.libellePays}}<br><br>'+
+                                '<strong>Type de papier :</strong> {{leCandidat.typePapier.libelleTypePapier}}<br><br>'+
+                                '<strong>Type de mariage souhaité :</strong> {{leCandidat.typeMariage.libelleTypeMariage}}<br><br>'+
+                                '</div>'+
+                                // SITUATION SOCIALE
+                                '<div class="tabOnglet"> '+
+                                '<h4>SITUATION SOCIALE</h4><hr><br>'+
+                                '<strong>Est célibataire :</strong> {{leCandidat.estCelibataire}}<br><br>'+
+                                '<strong>A déja été marié :</strong> {{leCandidat.dejaMarie}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>A déja été marié civilement :</strong> {{leCandidat.dejaMarieCivilement}}<br><br>'+
+                                '<strong>Est divorcé :</strong> {{leCandidat.divorce}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Date divorce :</strong> {{leCandidat.dateDivorce|date('d/m/Y')}}<br><br>'+
+                                '<strong>Nombres d\'enfants :</strong> {{leCandidat.dateDivorce|date('d/m/Y')}}<br><br>'+
+                                '</div>'+
+                            '<hr />'+
+                        '</div>'+
+
+                        '<div class="tab-pane fade active in" id="situationReligieuse">'+
+                                // SITUATION RELIGIEUSE
+                                '<div class="tabOnglet"> '+
+                                '<h4> SITUATION RELIGIEUSE</h4><hr><br>'+
+                                '<strong>Fait quotidiennement la prière :</strong> {{leCandidat.priereQuotidienne}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Fait la prière depuis :</strong> {{leCandidat.dateDebutPriere|date('d/m/Y')}}<br><br>'+
+                                '<strong>Prière dans leur tranches horaires :</strong> {{leCandidat.priereTrancheHoraire.libellePriereTrancheHoraire}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Fréquente les mosquées :</strong> {{leCandidat.frequentationMosquee}}<br><br>'+
+                                '<strong>Présence à la prière du vendredi :</strong> {{leCandidat.jumuaa.libelleJumaa}}<br><br>'+
+                                '<strong>Est reconvertis :</strong> {{leCandidat.estReconvertit}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Date reconvertion :</strong> {{leCandidat.dateReconvertion|date('d/m/Y')}}<br><br>'+
+                                '<strong>Référence religieuse :</strong> {{leCandidat.referenceReligieuse.libelleReferenceReligieuse}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Methode d\'apprentissage de la religion :</strong> {% for apprentissageReligion in leCandidat.apprentissageReligion %}{{apprentissageReligion.libelleApprentissageReligion}}{% endfor %}<br><br>'+
+                                '<strong>A l\'intention de faire la hijra :</strong> {{leCandidat.hijra}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Accepte la polygamie :</strong> {{leCandidat.polygamie.libellePolygamie}}<br>'+
+                                '</div>'+
+
+                                // HABITUDES
+                                '<div class="tabOnglet"> '+
+                                '<h4> HABITUDES</h4><hr><br>'+
+                                '<strong>Fumeur :</strong> {{leCandidat.fumeur}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>A la volonté d\'arrêter de fumer :</strong> {{leCandidat.arreterFumer}}<br><br>'+
+                                '<strong>Consomme des stupéfiants :</strong> {{leCandidat.consoStup}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Consomme de l\'alcool :</strong> {{leCandidat.consoAlcool}}<br><br>'+
+                                '<strong>Ecoute de la musique :</strong> {{leCandidat.musique.libelleMusique}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Regarde la télévision :</strong> {{leCandidat.television.libelleTelevision}}<br><br>'+
+                                '</div>'+
+                            '<hr />'+
+                        '</div>'+
+
+                        '<div class="tab-pane fade active in" id="informationsComplementaires">'+
+                                // INFORMATIONS COMPLEMENTAIRES
+                                '<div class="tabOnglet"> '+
+                                '<h4> INFORMATIONS COMPLEMENTAIRES</h4><hr><br>'+
+                                '<strong>Taille :</strong> {{leCandidat.taille}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Poids :</strong> {{leCandidat.poids}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>IMC :</strong> {{leCandidat.poids}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Teint de peau :</strong> {{leCandidat.teint.libelleTeint}}<br><br>'+
+
+                                {% if typeSexe == "Homme" %}
+                                '<strong>Possede une barbe :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Souhaite laisser pousser la barbe :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Se taille la barbe :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Se rase la barbe :</strong> {{leCandidat.nom}}<br><br>'+
+                                {% elseif typeSexe == "Femme" %}
+                                '<strong>Porte le voile :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>A l\'intention de porter le voile :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;</strong>'+
+                                '<strong>Date port du voile :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Souhaite travailler :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Commentaire sur le travail :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Le tuteur est au courant de son inscription :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Raison pour laquelle le tuteur n\'est pas au courant :</strong> {{leCandidat.nom}}<br><br>'+
+                                {% endif %}
+                                '<strong>A des exigeances physiques :</strong> {{leCandidat.exigencesPhysique}}<br><br>'+
+                                '<strong>Présentation personnelle :</strong> {{leCandidat.presentationPerso}}<br><br>'+
+                                '<strong>Occupation du temps libre :</strong> {{leCandidat.tempsLibre}}<br><br>'+
+                                '<strong>Les attentes du mariage :</strong> {{leCandidat.attenteMariage}}<br><br>'+
+                                '<strong>Remarque :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '</div>'+
+
+                                //Information supplémentaires femmes
+                                {% if typeSexe == "Femme" %}
+                                '<div class="tabOnglet"> '+
+                                '<h4> Information supplémentaires</h4><hr><br>'+
+                                '<strong>Nom du tuteur :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Prénom du tuteur :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Télephone du tuteur :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Nom du représentant :</strong> {{leCandidat.nom}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Prénom du représentant :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Téléphone du représentant :</strong> {{leCandidat.nom}}<br><br>'+
+                                '<strong>Type de représentant :</strong> {{leCandidat.nom}}<br><br>'+
+                                '</div>'+
+                                {% endif %}
+
+                                // INFORMATIONS RELATIVES AUX PARENTS
+                                '<div class="tabOnglet"> '+
+                                '<h4> INFORMATIONS RELATIVES AUX PARENTS</h4><hr><br>'+
+                                '<strong>Nom du père :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Nom de la mère :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Prénom du père :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Prénom de la mère :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Téléphone du père :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Téléphone de la mère :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Pratiquant  :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Pratiquante  :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Type de relation :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Type de relation :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Pays d\'origine du père :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Pays d\'origine de la mère :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Ville d\'habitation du père :</strong> {{leCandidat.remarques}}&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                '<strong>Ville d\'habitation de la mère :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '</div>'+
+                            '<hr />'+
+                        '</div>'+
+
+                         '<div class="tab-pane fade active in" id="profilRecherchee">'+
+                                //PROFIL RECHERCHE
+                                '<div class="tabOnglet"> '+
+                                '<h4>PROFIL RECHERCHE</h4><hr><br>'+
+                                '<strong>Age minimale recherchée :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Age maximale recherchée :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Origine recherchée :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Accepte un(e) prétendant(e) divorcé(e) :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Accete des enfants :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Accepte des enfants, au maximun :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Accepte des enfants, dont l\'âge est inférieur à :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Tolère que le/la prétendant(e) fume :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Recherche Taille  :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Recherche Poids  :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Recherche Teint  :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '<strong>Recherche Ville  :</strong> {{leCandidat.remarques}}<br><br>'+
+                                '</div>'+
+                         '</div>'+
+
+                     '</div>'+
+
+
+                    '</div>'
+                    );
+                }
+                {% endfor %}
+                $('#infoCandidat').modal();
+            })
+        });
+    </script>
+
+
+{% endblock %}

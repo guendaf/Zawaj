@@ -1,0 +1,426 @@
+<?php
+
+namespace Zawaj\FichesCandidatBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ProfilRecherche
+ *
+ * @ORM\Entity()
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @ORM\DiscriminatorMap({
+ *      "profilRechercheHomme"      = "ProfilRechercheHomme",
+ *      "profilRechercheFemme"   = "ProfilRechercheFemme",
+ * })
+ * @ORM\Entity(repositoryClass="Zawaj\FichesCandidatBundle\Entity\ProfilRechercheRepository")
+ */
+
+class ProfilRecherche
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ageMin", type="smallint")
+     */
+    private $ageMin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ageMax", type="smallint")
+     */
+    private $ageMax;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="origine", type="string", length=255)
+     */
+    private $origine;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="estdivorce", type="boolean")
+     */
+    private $estdivorce;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="possedeEnfant", type="boolean")
+     */
+    private $possedeEnfant;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbEnfantMax", type="smallint")
+     */
+    private $nbEnfantMax;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="ageEnfantMax", type="smallint")
+     */
+    private $ageEnfantMax;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="fumeur", type="boolean")
+     */
+    private $fumeur;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tailleMin", type="smallint")
+     */
+    private $tailleMin;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="tailleMax", type="smallint")
+     */
+    private $tailleMax;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Zawaj\FichesCandidatBundle\Entity\ExigeancePoids")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $exigeancePoids;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Zawaj\FichesCandidatBundle\Entity\Teint")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $teint;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Zawaj\FichesCandidatBundle\Entity\CP", cascade={"persist"})
+     */
+    private $villeHabRecherche;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set ageMin
+     *
+     * @param integer $ageMin
+     * @return profilRecherche
+     */
+    public function setAgeMin($ageMin)
+    {
+        $this->ageMin = $ageMin;
+
+        return $this;
+    }
+
+    /**
+     * Get ageMin
+     *
+     * @return integer 
+     */
+    public function getAgeMin()
+    {
+        return $this->ageMin;
+    }
+
+    /**
+     * Set ageMax
+     *
+     * @param integer $ageMax
+     * @return profilRecherche
+     */
+    public function setAgeMax($ageMax)
+    {
+        $this->ageMax = $ageMax;
+
+        return $this;
+    }
+
+    /**
+     * Get ageMax
+     *
+     * @return integer 
+     */
+    public function getAgeMax()
+    {
+        return $this->ageMax;
+    }
+
+    /**
+     * Set origine
+     *
+     * @param string $origine
+     * @return profilRecherche
+     */
+    public function setOrigine($origine)
+    {
+        $this->origine = $origine;
+
+        return $this;
+    }
+
+    /**
+     * Get origine
+     *
+     * @return string 
+     */
+    public function getOrigine()
+    {
+        return $this->origine;
+    }
+
+    /**
+     * Set estdivorce
+     *
+     * @param boolean $estdivorce
+     * @return profilRecherche
+     */
+    public function setEstdivorce($estdivorce)
+    {
+        $this->estdivorce = $estdivorce;
+
+        return $this;
+    }
+
+    /**
+     * Get estdivorce
+     *
+     * @return boolean 
+     */
+    public function getEstdivorce()
+    {
+        return $this->estdivorce;
+    }
+
+    /**
+     * Set possedeEnfant
+     *
+     * @param boolean $possedeEnfant
+     * @return profilRecherche
+     */
+    public function setPossedeEnfant($possedeEnfant)
+    {
+        $this->possedeEnfant = $possedeEnfant;
+
+        return $this;
+    }
+
+    /**
+     * Get possedeEnfant
+     *
+     * @return boolean 
+     */
+    public function getPossedeEnfant()
+    {
+        return $this->possedeEnfant;
+    }
+
+    /**
+     * Set nbEnfantMax
+     *
+     * @param integer $nbEnfantMax
+     * @return profilRecherche
+     */
+    public function setNbEnfantMax($nbEnfantMax)
+    {
+        $this->nbEnfantMax = $nbEnfantMax;
+
+        return $this;
+    }
+
+    /**
+     * Get nbEnfantMax
+     *
+     * @return integer 
+     */
+    public function getNbEnfantMax()
+    {
+        return $this->nbEnfantMax;
+    }
+
+    /**
+     * Set ageEnfantMax
+     *
+     * @param integer $ageEnfantMax
+     * @return profilRecherche
+     */
+    public function setAgeEnfantMax($ageEnfantMax)
+    {
+        $this->ageEnfantMax = $ageEnfantMax;
+
+        return $this;
+    }
+
+    /**
+     * Get ageEnfantMax
+     *
+     * @return integer 
+     */
+    public function getAgeEnfantMax()
+    {
+        return $this->ageEnfantMax;
+    }
+
+    /**
+     * Set fumeur
+     *
+     * @param boolean $fumeur
+     * @return profilRecherche
+     */
+    public function setFumeur($fumeur)
+    {
+        $this->fumeur = $fumeur;
+
+        return $this;
+    }
+
+    /**
+     * Get fumeur
+     *
+     * @return boolean 
+     */
+    public function getFumeur()
+    {
+        return $this->fumeur;
+    }
+
+    /**
+     * Set tailleMin
+     *
+     * @param integer $tailleMin
+     * @return profilRecherche
+     */
+    public function setTailleMin($tailleMin)
+    {
+        $this->tailleMin = $tailleMin;
+
+        return $this;
+    }
+
+    /**
+     * Get tailleMin
+     *
+     * @return integer 
+     */
+    public function getTailleMin()
+    {
+        return $this->tailleMin;
+    }
+
+    /**
+     * Set tailleMax
+     *
+     * @param integer $tailleMax
+     * @return profilRecherche
+     */
+    public function setTailleMax($tailleMax)
+    {
+        $this->tailleMax = $tailleMax;
+
+        return $this;
+    }
+
+    /**
+     * Get tailleMax
+     *
+     * @return integer 
+     */
+    public function getTailleMax()
+    {
+        return $this->tailleMax;
+    }
+
+    /**
+     * Set exigeancePoids
+     *
+     * @param \Zawaj\FichesCandidatBundle\Entity\ExigeancePoids $exigeancePoids
+     * @return ProfilRecherche
+     */
+    public function setExigeancePoids(\Zawaj\FichesCandidatBundle\Entity\ExigeancePoids $exigeancePoids)
+    {
+        $this->exigeancePoids = $exigeancePoids;
+
+        return $this;
+    }
+
+    /**
+     * Get exigeancePoids
+     *
+     * @return \Zawaj\FichesCandidatBundle\Entity\ExigeancePoids 
+     */
+    public function getExigeancePoids()
+    {
+        return $this->exigeancePoids;
+    }
+
+    /**
+     * Set teint
+     *
+     * @param \Zawaj\FichesCandidatBundle\Entity\Teint $teint
+     * @return ProfilRecherche
+     */
+    public function setTeint(\Zawaj\FichesCandidatBundle\Entity\Teint $teint)
+    {
+        $this->teint = $teint;
+
+        return $this;
+    }
+
+    /**
+     * Get teint
+     *
+     * @return \Zawaj\FichesCandidatBundle\Entity\Teint 
+     */
+    public function getTeint()
+    {
+        return $this->teint;
+    }
+
+    /**
+     * Set villeHabRecherche
+     *
+     * @param \Zawaj\FichesCandidatBundle\Entity\CP $villeHabRecherche
+     * @return ProfilRecherche
+     */
+    public function setVilleHabRecherche(\Zawaj\FichesCandidatBundle\Entity\CP $villeHabRecherche)
+    {
+        $this->villeHabRecherche = $villeHabRecherche;
+
+        return $this;
+    }
+
+    /**
+     * Get villeHabRecherche
+     *
+     * @return \Zawaj\FichesCandidatBundle\Entity\CP 
+     */
+    public function getVilleHabRecherche()
+    {
+        return $this->villeHabRecherche;
+    }
+}

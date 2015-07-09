@@ -1446,7 +1446,7 @@ class Candidat
      * @param \Zawaj\FichesCandidatBundle\Entity\DomaineProfession $domaineProfession
      * @return Candidat
      */
-    public function addDomaineProfession($domaineProfession)
+    public function addDomaineProfession(DomaineProfession $domaineProfession)
     {
         $this->domaineProfession[] = $domaineProfession;
 
@@ -1458,7 +1458,7 @@ class Candidat
      *
      * @param \Zawaj\FichesCandidatBundle\Entity\DomaineProfession $domaineProfession
      */
-    public function removeDomaineProfession($domaineProfession)
+    public function removeDomaineProfession(DomaineProfession $domaineProfession)
     {
         $this->domaineProfession->removeElement($domaineProfession);
     }
@@ -1479,7 +1479,7 @@ class Candidat
      * @param \Zawaj\FichesCandidatBundle\Entity\DomaineEtude $domaineEtude
      * @return Candidat
      */
-    public function addDomaineEtude(\Zawaj\FichesCandidatBundle\Entity\DomaineEtude $domaineEtude)
+    public function addDomaineEtude(DomaineEtude $domaineEtude)
     {
         $this->domaineEtude[] = $domaineEtude;
 
@@ -1491,7 +1491,7 @@ class Candidat
      *
      * @param \Zawaj\FichesCandidatBundle\Entity\DomaineEtude $domaineEtude
      */
-    public function removeDomaineEtude(\Zawaj\FichesCandidatBundle\Entity\DomaineEtude $domaineEtude)
+    public function removeDomaineEtude(DomaineEtude $domaineEtude)
     {
         $this->domaineEtude->removeElement($domaineEtude);
     }

@@ -8,8 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Zawaj\FichesCandidatBundle\Entity\Candidat;
 use Zawaj\FichesCandidatBundle\Entity\DomaineEtude;
+use Zawaj\FichesCandidatBundle\Entity\DomaineProfession;
+use Zawaj\FichesCandidatBundle\Entity\NiveauArabe;
 use Zawaj\FichesCandidatBundle\Entity\Pere;
 use Zawaj\FichesCandidatBundle\Form\CandidatType;
+use Zawaj\FichesCandidatBundle\Form\DomaineProfessionType;
+use Zawaj\FichesCandidatBundle\Form\NiveauArabeType;
 use Zawaj\FichesCandidatBundle\Form\PereType;
 use Zawaj\FichesCandidatBundle\Form\TailleBarbeType;
 use Zawaj\FichesCandidatBundle\Form\DomaineEtudeType;
@@ -43,30 +47,25 @@ class FichesCandidatController extends Controller
 
     public function fichesInscritsAction(Request $request)
     {
-
+        $em = $this->getDoctrine()->getManager();
+        $id = 1;
         // On crée un objet TailleBarbe
-        $tailleBarbe = new DomaineEtude();
+        $variable = $em->getRepository('ZawajFichesCandidatBundle:Candidat')->find($id);
+        $formc = $this->createForm(new CandidatType(), $variable);
 
-        $form = $this->createForm(new DomaineEtudeType(), $tailleBarbe);
 
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($tailleBarbe);
+        if ($formc->handleRequest($request)->isValid()) {
             $em->flush();
+        }
 
             $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
 
-            return $this->render('ZawajFichesCandidatBundle::fichesInscrits.html.twig', array(
-                'form' => $form->createView(),
-            ));
-        }
 
         // On passe la méthode createView() du formulaire à la vue
         // afin qu'elle puisse afficher le formulaire toute seule
         return $this->render('ZawajFichesCandidatBundle::fichesInscrits.html.twig', array(
-            'form' => $form->createView(),
+            'variable' => $variable,
+            'formc' => $formc->createView(),
         ));
     }
 

@@ -14,8 +14,11 @@ class DomaineEtudeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('domaineEtude')
+        $builder->add('domaineEtude', 'entity', array(
+            'class'    => 'ZawajFichesCandidatBundle:DomaineEtude',
+            'property' => 'domaineEtude',
+            'multiple' => false
+        ))
         ;
     }
     

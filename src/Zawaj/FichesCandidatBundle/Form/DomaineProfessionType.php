@@ -14,8 +14,11 @@ class DomaineProfessionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('libelleDomaineProfession')
+        $builder->add('domaineProfession', 'entity', array(
+                'class' => 'ZawajFichesCandidatBundle:DomaineProfession',
+                'property' => 'libelleDomaineProfession',
+                'multiple' => false
+            ))
         ;
     }
     

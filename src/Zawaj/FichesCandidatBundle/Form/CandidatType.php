@@ -55,10 +55,10 @@ class CandidatType extends AbstractType
             ->add('typeHabitation', new TypeHabitationType())
             ->add('referenceReligieuse', new ReferenceReligieuseType())
             ->add('jumuaa', new JumuaaType())
-            ->add('apprentissageReligion', 'collection', array(
-                'type' => new ApprentissageReligionType(),
-                'allow_add' => true,
-                'allow_delete' => true
+            ->add('apprentissageReligion', 'entity', array(
+                'class' => 'ZawajFichesCandidatBundle:ApprentissageReligion',
+                'property' => 'name',
+                'multiple' => true
             ))
             ->add('priereTrancheHoraire', new PriereTrancheHoraireType())
             ->add('musique', new MusiqueType())
